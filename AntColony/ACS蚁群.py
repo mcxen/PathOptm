@@ -134,6 +134,7 @@ class Ant(object):
  
         # 计算路径总长度
         self.__cal_total_distance()
+        # print(self.total_distance)
  
 #----------- TSP问题 -----------
         
@@ -306,7 +307,68 @@ class TSP(object):
     # 主循环
     def mainloop(self):
         self.root.mainloop()
- 
+
+
+class TSPPLT(object):
+    def __init__(self, n_ants, n_iterations):
+        self.n_ants = n_ants
+        self.n_iterations = n_iterations
+        self.ants = [Ant(ID=i) for i in range(n_ants)]
+        self.best_ant = copy.deepcopy(self.ants[0])
+        self.iter = 0
+        self.__lock = threading.Lock()
+        self.__running = False
+
+    def search_path(self, evt=None):
+        self.__lock.acquire()
+        self.__running = True
+        self.__lock.release()
+
+        while self.__running and self.iter < self.n_iterations:
+            for ant in self.ants:
+                ant.search_path()
+                # print(self.best_ant.total_distance)
+                if self.best_ant.total_distance ==0:
+                    self.best_ant.total_distance =1<<31
+                if ant.total_distance < self.best_ant.total_distance:
+                    self.best_ant = copy.deepcopy(ant)
+            self.__update_pheromone_graph()
+            print(f"迭代次数：{self.iter} 最佳路径总距离：{int(self.best_ant.total_distance)}")
+            # self.plot_path(self.best_ant.path)
+            self.iter += 1
+
+    def __update_pheromone_graph(self):
+        temp_pheromone = np.zeros((city_num, city_num))
+        for ant in self.ants:
+            for i in range(1, city_num):
+                start, end = ant.path[i - 1], ant.path[i]
+                temp_pheromone[start][end] += Q / ant.total_distance
+                temp_pheromone[end][start] = temp_pheromone[start][end]
+
+        global pheromone_graph
+        # 更新所有城市的信息素，旧的信息素衰减加上新的信息素。
+        pheromone_graph = pheromone_graph * RHO + temp_pheromone
+
+    def plot_path(self, path):
+        path_coords = [city_pos_list[city] for city in path]
+        path_coords.append(path_coords[0])  # 回到起点
+        path_coords = np.array(path_coords)
+
+        fig = plt.figure(figsize=(10, 6))
+        ax = fig.add_subplot(111, projection='3d')
+
+        ax.scatter(city_pos_list[:, 0], city_pos_list[:, 1], city_pos_list[:, 2], c='red', label='Cities')
+        ax.plot(path_coords[:, 0], path_coords[:, 1], path_coords[:, 2], c='blue', label='Path')
+
+        for i, pos in enumerate(city_pos_list):
+            ax.text(pos[0], pos[1], pos[2], f'{i}', fontsize=12, ha='right')
+
+        ax.set_title(f'TSP Path Opt, Total Distance: {self.best_ant.total_distance:.2f}')
+        ax.set_xlabel('X Coordinate')
+        ax.set_ylabel('Y Coordinate')
+        ax.set_zlabel('Z Coordinate')
+        ax.legend()
+        plt.show()
 #----------- 程序的入口处 -----------
                 
 if __name__ == '__main__':
@@ -317,7 +379,6 @@ if __name__ == '__main__':
 -------------------------------------------------------- 
     """)
 
-    # TSP(tkinter.Tk()).mainloop()
 
     # 城市坐标列表
     city_pos_list = np.array([
@@ -346,34 +407,14 @@ if __name__ == '__main__':
             if i != j:
                 distance_graph[i][j] = np.linalg.norm(city_pos_list[i] - city_pos_list[j])
 
-    # 定义ALPHA和BETA
+    # 定义常量
     ALPHA = 1.0
     BETA = 5.0
-    # 创建一个蚂蚁实例并搜索路径
-    ant = Ant(ID=1)
-    ant.search_path()
+    RHO = 0.5  # 信息素挥发因子
+    Q = 100.0  # 信息素常量
 
-    # 获取蚂蚁路径的城市坐标
-    path_coords = [city_pos_list[city] for city in ant.path]
-    path_coords.append(path_coords[0])  # 回到起点
+    aco = TSPPLT(n_ants=10, n_iterations=100)
+    aco.search_path()
+    aco.plot_path(aco.best_ant.path)
 
-    # 将路径坐标转换为numpy数组
-    path_coords = np.array(path_coords)
-
-    # 绘制城市和路径
-    fig = plt.figure(figsize=(10, 6))
-    ax = fig.add_subplot(111, projection='3d')
-
-    ax.scatter(city_pos_list[:, 0], city_pos_list[:, 1], city_pos_list[:, 2], c='red', label='Cities')
-    ax.plot(path_coords[:, 0], path_coords[:, 1], path_coords[:, 2], c='blue', label='Path')
-
-    for i, pos in enumerate(city_pos_list):
-        ax.text(pos[0], pos[1], pos[2], f'{i}', fontsize=12, ha='right')
-
-    ax.set_title(f'TSP Path by Ant ID {ant.ID}, Total Distance: {ant.total_distance:.2f}')
-    ax.set_xlabel('X Coordinate')
-    ax.set_ylabel('Y Coordinate')
-    ax.set_zlabel('Z Coordinate')
-    ax.legend()
-    plt.show()
-    
+    # TSP(tkinter.Tk()).mainloop()

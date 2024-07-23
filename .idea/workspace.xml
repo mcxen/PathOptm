@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e68cc2b1-fc26-45b2-85d3-38f22e19d1a6" name="Changes" comment="Small">
-      <change afterPath="$PROJECT_DIR$/GATSP/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GATSP/assets/README/CleanShot 2024-07-23 at 08.54.15@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GATSP/ga.py" beforeDir="false" afterPath="$PROJECT_DIR$/GATSP/ga.py" afterDir="false" />
+    <list default="true" id="e68cc2b1-fc26-45b2-85d3-38f22e19d1a6" name="Changes" comment="增加2DTSP结果显示新样式，matplotlib显示结果">
+      <change beforePath="$PROJECT_DIR$/AntColony/ACS蚁群.py" beforeDir="false" afterPath="$PROJECT_DIR$/AntColony/ACS蚁群.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +14,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="WARN_ABOUT_CRLF" value="false" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -34,6 +33,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.ACS蚁群.executor": "Run",
     "Python.ga.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -63,7 +63,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1721663643702</updated>
-      <workItem from="1721663645647" duration="7628000" />
+      <workItem from="1721663645647" duration="18096000" />
     </task>
     <task id="LOCAL-00001" summary="Small">
       <option name="closed" value="true" />
@@ -73,7 +73,39 @@
       <option name="project" value="LOCAL" />
       <updated>1721663890725</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="更新注释">
+      <option name="closed" value="true" />
+      <created>1721701480491</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1721701480491</updated>
+    </task>
+    <task id="LOCAL-00003" summary="更新注释">
+      <option name="closed" value="true" />
+      <created>1721701916404</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1721701916404</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加蚁群算法">
+      <option name="closed" value="true" />
+      <created>1721705964767</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1721705964767</updated>
+    </task>
+    <task id="LOCAL-00005" summary="增加2DTSP结果显示新样式，matplotlib显示结果">
+      <option name="closed" value="true" />
+      <created>1721717946681</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721717946681</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,10 +137,14 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Small" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small" />
+    <MESSAGE value="更新注释" />
+    <MESSAGE value="添加蚁群算法" />
+    <MESSAGE value="增加2DTSP结果显示新样式，matplotlib显示结果" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加2DTSP结果显示新样式，matplotlib显示结果" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PathOptm$ACS.coverage" NAME="ACS蚁群 Coverage Results" MODIFIED="1721719315793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AntColony" />
     <SUITE FILE_PATH="coverage/PathOptm$ga.coverage" NAME="ga Coverage Results" MODIFIED="1721696017264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
-    <SUITE FILE_PATH="coverage/PathOptm$main.coverage" NAME="main Coverage Results" MODIFIED="1721697903862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
+    <SUITE FILE_PATH="coverage/PathOptm$main.coverage" NAME="main Coverage Results" MODIFIED="1721719243773" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
   </component>
 </project>
