@@ -143,7 +143,7 @@ class Ga:
             self.next_gen()
             # 连接首尾
             result = copy_list(self.best.genes)
-            result.append(result[0])
-            self.result_list.append(result)
-            self.fitness_list.append(self.best.fitness)
+            result.append(result[0]) #最后加上第一个个体
+            self.result_list.append(result) #每一代的最优的路径的结果图
+            self.fitness_list.append(self.best.fitness) #每一代的适应度
         return self.result_list, self.fitness_list
