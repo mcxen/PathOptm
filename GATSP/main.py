@@ -20,6 +20,50 @@ def build_dist_mat(input_list):
     return dist_mat
 
 
+def plot_3d_path(result_pos_list, title='Path Optimization'):
+    # 确保输入数据是numpy数组
+    result_pos_list = np.array(result_pos_list)
+
+    # 使用 Matplotlib 绘制三维路线
+    def plot_with_matplotlib(result_pos_list):
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.plot(result_pos_list[:, 0], result_pos_list[:, 1], result_pos_list[:, 2], 'o-r')
+        ax.set_title(title)
+        ax.set_xlabel('X 轴')
+        ax.set_ylabel('Y 轴')
+        ax.set_zlabel('Z 轴')
+        plt.show()
+
+    # 使用 Plotly 绘制三维路线
+    def plot_with_plotly(result_pos_list):
+        fig = go.Figure()
+        fig.add_trace(go.Scatter3d(
+            x=result_pos_list[:, 0],
+            y=result_pos_list[:, 1],
+            z=result_pos_list[:, 2],
+            mode='lines+markers',
+            line=dict(color='red', width=2),
+            marker=dict(size=5, color='blue')
+        ))
+
+        fig.update_layout(
+            title=title,
+            scene=dict(
+                xaxis_title='X',
+                yaxis_title='Y',
+                zaxis_title='Z'
+            )
+        )
+        fig.show()
+
+    # 调用 Matplotlib 绘制
+    plot_with_matplotlib(result_pos_list)
+
+    # 调用 Plotly 绘制
+    plot_with_plotly(result_pos_list)
+
+
 # 城市坐标
 # city_pos_list = np.random.rand(config.city_num, config.pos_dimension)
 
@@ -60,39 +104,7 @@ plt.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显�
 print(matplotlib.matplotlib_fname())
 
 if len(result_pos_list[0]) == 3:
-    # 原始图片
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    # 绘制三维散点图
-    ax.plot(result_pos_list[:, 0], result_pos_list[:, 1], result_pos_list[:, 2], 'o-r')
-    # 添加标题
-    ax.set_title(u"三维路线")
-    # 添加标签
-    ax.set_xlabel('X 轴')
-    ax.set_ylabel('Y 轴')
-    ax.set_zlabel('Z 轴')
-    plt.show()
-    # 原始图片
-
-    fig = go.Figure()
-    # 添加散点图
-    fig.add_trace(go.Scatter3d(
-        x=result_pos_list[:, 0],
-        y=result_pos_list[:, 1],
-        z=result_pos_list[:, 2],
-        mode='lines+markers',
-        line=dict(color='red', width=2),
-        marker=dict(size=5, color='blue')
-    ))
-
-    fig.update_layout(
-        scene=dict(
-            xaxis_title='X',
-            yaxis_title='Y',
-            zaxis_title='Z'
-        )
-    )
-    fig.show()
+    plot_3d_path(result_pos_list)
 else:
     fig = plt.figure()
     plt.plot(result_pos_list[:, 0], result_pos_list[:, 1], 'o-r')

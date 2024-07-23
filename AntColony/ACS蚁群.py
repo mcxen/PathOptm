@@ -9,7 +9,7 @@ import time
 from functools import reduce
 import matplotlib.pyplot as plt
 import numpy as np
-
+import plotly.graph_objects as go
 (ALPHA, BETA, RHO, Q) = (1.5,2.0,0.9,100.0)
 # 城市数，蚁群
 (city_num, ant_num) = (30,30)
@@ -369,6 +369,48 @@ class TSPPLT(object):
         ax.set_zlabel('Z Coordinate')
         ax.legend()
         plt.show()
+
+def plot_3d_path(result_pos_list, title='Path Optm'):
+    # 使用 Matplotlib 绘制三维路线
+    # 确保输入数据是numpy数组
+    result_pos_list = np.array(result_pos_list)
+    def plot_with_matplotlib(result_pos_list):
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.plot(result_pos_list[:, 0], result_pos_list[:, 1], result_pos_list[:, 2], 'o-r')
+        ax.set_title(title)
+        ax.set_xlabel('X 轴')
+        ax.set_ylabel('Y 轴')
+        ax.set_zlabel('Z 轴')
+        plt.show()
+
+    # 使用 Plotly 绘制三维路线
+    def plot_with_plotly(result_pos_list):
+        fig = go.Figure()
+        fig.add_trace(go.Scatter3d(
+            x=result_pos_list[:, 0],
+            y=result_pos_list[:, 1],
+            z=result_pos_list[:, 2],
+            mode='lines+markers',
+            line=dict(color='red', width=2),
+            marker=dict(size=5, color='blue')
+        ))
+
+        fig.update_layout(
+            title=title,
+            scene=dict(
+                xaxis_title='X',
+                yaxis_title='Y',
+                zaxis_title='Z'
+            )
+        )
+        fig.show()
+
+    # 调用 Matplotlib 绘制
+    plot_with_matplotlib(result_pos_list)
+
+    # 调用 Plotly 绘制
+    plot_with_plotly(result_pos_list)
 #----------- 程序的入口处 -----------
                 
 if __name__ == '__main__':
@@ -378,7 +420,6 @@ if __name__ == '__main__':
     程序：蚁群算法解决TPS问题程序 
 -------------------------------------------------------- 
     """)
-
 
     # 城市坐标列表
     city_pos_list = np.array([
@@ -415,6 +456,9 @@ if __name__ == '__main__':
 
     aco = TSPPLT(n_ants=10, n_iterations=100)
     aco.search_path()
-    aco.plot_path(aco.best_ant.path)
-
+    # aco.plot_path(aco.best_ant.path)
+    path_coords = [city_pos_list[city] for city in aco.best_ant.path]
+    path_coords.append(path_coords[0])  # 回到起点
+    path_coords = np.array(path_coords)
+    plot_3d_path(path_coords)
     # TSP(tkinter.Tk()).mainloop()
