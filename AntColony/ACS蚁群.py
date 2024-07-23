@@ -7,7 +7,8 @@ import tkinter #//GUI模块
 import threading#//多线程编程
 import time
 from functools import reduce
- 
+import matplotlib.pyplot as plt
+import numpy as np
 
 (ALPHA, BETA, RHO, Q) = (1.5,2.0,0.9,100.0)
 # 城市数，蚁群
@@ -23,17 +24,13 @@ pheromone_graph = [ [1.0 for col in range(city_num)] for raw in range(city_num)]
  
 #----------- 蚂蚁 -----------
 class Ant(object):
- 
     # 初始化
     def __init__(self,ID):
-        
         self.ID = ID                 # ID
         self.__clean_data()          # 随机初始化出生点
- 
     # 初始数据
     def __clean_data(self):
-    
-        self.path = []               # 当前蚂蚁的路径           
+        self.path = []               # 当前蚂蚁的路径
         self.total_distance = 0.0    # 当前路径的总距离
         self.move_count = 0          # 移动次数
         self.current_city = -1       # 当前停留的城市
@@ -41,46 +38,61 @@ class Ant(object):
         
         city_index = random.randint(0,city_num-1) # 随机初始出生点
         self.current_city = city_index
-        self.path.append(city_index)
+        self.path.append(city_index) #路径加上当前的idx
         self.open_table_city[city_index] = False
         self.move_count = 1
     
     # 选择下一个城市
     def __choice_next_city(self):
-        
         next_city = -1
         select_citys_prob = [0.0 for i in range(city_num)]  #存储去下个城市的概率
         total_prob = 0.0
- 
-        # 获取去下一个城市的概率
+        # 对于每一个城市（city_num 表示城市的数量）
         for i in range(city_num):
-            if self.open_table_city[i]:                                          
-                try :
-                    # 计算概率：与信息素浓度成正比，与距离成反比
-                    select_citys_prob[i] = pow(pheromone_graph[self.current_city][i], ALPHA) * pow((1.0/distance_graph[self.current_city][i]), BETA)
+            # 如果城市 i 还未被访问（open_table_city 是一个标记已访问城市的数组）
+            if self.open_table_city[i]:
+                try:
+                    # 计算从当前城市到城市 i 的选择概率
+                    # select_citys_prob 是一个存储选择概率的数组
+                    # pheromone_graph 是信息素浓度矩阵
+                    # distance_graph 是距离矩阵
+                    # ALPHA 和 BETA 是控制信息素浓度和距离影响力的参数
+                    select_citys_prob[i] = pow(pheromone_graph[self.current_city][i], ALPHA) * pow(
+                        (1.0 / distance_graph[self.current_city][i]), BETA)
+                    # 累加总概率（total_prob 用于后续的归一化）
                     total_prob += select_citys_prob[i]
                 except ZeroDivisionError as e:
-                    print ('Ant ID: {ID}, current city: {current}, target city: {target}'.format(ID = self.ID, current = self.current_city, target = i))
+                    # 捕获除零错误，如果发生这种错误，打印蚂蚁的ID、当前城市和目标城市的信息
+                    # 然后退出程序（sys.exit(1)）
+                    print('Ant ID: {ID}, current city: {current}, target city: {target}'.format(ID=self.ID,
+                                                                                                current=self.current_city,
+                                                                                                target=i))
                     sys.exit(1)
-        
         # 轮盘选择城市
+        # 如果总概率大于0
         if total_prob > 0.0:
-            # 产生一个随机概率,0.0-total_prob
+            # 生成一个在0.0到total_prob之间的随机概率
             temp_prob = random.uniform(0.0, total_prob)
+            # 遍历所有城市
             for i in range(city_num):
+                # 如果城市i还未被访问
                 if self.open_table_city[i]:
-                    # 轮次相减
+                    # 从临时概率中减去城市i的选择概率
                     temp_prob -= select_citys_prob[i]
+                    # 如果临时概率小于0
                     if temp_prob < 0.0:
+                        # 当随机数小于0时，表明当前城市的累积概率区间包含该随机数，**因此选择当前城市是合理的。**
                         next_city = i
+                        # 结束循环
                         break
-
- 
+        # 如果轮盘赌选择后 next_city 仍然是 -1
         if (next_city == -1):
+            # 随机选择一个城市
             next_city = random.randint(0, city_num - 1)
-            while ((self.open_table_city[next_city]) == False):  # if==False,说明已经遍历过了
+            # 如果选择的城市已经被访问过
+            while ((self.open_table_city[next_city]) == False):
+                # 再随机选择一个城市
                 next_city = random.randint(0, city_num - 1)
- 
         # 返回下一个城市序号
         return next_city
     
@@ -304,5 +316,64 @@ if __name__ == '__main__':
     程序：蚁群算法解决TPS问题程序 
 -------------------------------------------------------- 
     """)
-    TSP(tkinter.Tk()).mainloop()
+
+    # TSP(tkinter.Tk()).mainloop()
+
+    # 城市坐标列表
+    city_pos_list = np.array([
+        [67.50, 10.11, 29.33],
+        [77.26, 69.57, 74.74],
+        [83.38, 22.45, 79.39],
+        [76.35, 50.75, 54.87],
+        [40.42, 18.64, 73.29],
+        [73.76, 26.53, 43.98],
+        [4.92, 16.17, 93.49],
+        [95.77, 86.62, 14.55],
+        [55.32, 11.48, 27.65],
+        [89.38, 27.58, 77.86]
+    ])
+
+    # 城市数量
+    city_num = city_pos_list.shape[0]
+
+    # 定义信息素矩阵和距离矩阵
+    pheromone_graph = np.random.rand(city_num, city_num)
+    distance_graph = np.zeros((city_num, city_num))
+
+    # 计算城市之间的欧几里得距离
+    for i in range(city_num):
+        for j in range(city_num):
+            if i != j:
+                distance_graph[i][j] = np.linalg.norm(city_pos_list[i] - city_pos_list[j])
+
+    # 定义ALPHA和BETA
+    ALPHA = 1.0
+    BETA = 5.0
+    # 创建一个蚂蚁实例并搜索路径
+    ant = Ant(ID=1)
+    ant.search_path()
+
+    # 获取蚂蚁路径的城市坐标
+    path_coords = [city_pos_list[city] for city in ant.path]
+    path_coords.append(path_coords[0])  # 回到起点
+
+    # 将路径坐标转换为numpy数组
+    path_coords = np.array(path_coords)
+
+    # 绘制城市和路径
+    fig = plt.figure(figsize=(10, 6))
+    ax = fig.add_subplot(111, projection='3d')
+
+    ax.scatter(city_pos_list[:, 0], city_pos_list[:, 1], city_pos_list[:, 2], c='red', label='Cities')
+    ax.plot(path_coords[:, 0], path_coords[:, 1], path_coords[:, 2], c='blue', label='Path')
+
+    for i, pos in enumerate(city_pos_list):
+        ax.text(pos[0], pos[1], pos[2], f'{i}', fontsize=12, ha='right')
+
+    ax.set_title(f'TSP Path by Ant ID {ant.ID}, Total Distance: {ant.total_distance:.2f}')
+    ax.set_xlabel('X Coordinate')
+    ax.set_ylabel('Y Coordinate')
+    ax.set_zlabel('Z Coordinate')
+    ax.legend()
+    plt.show()
     

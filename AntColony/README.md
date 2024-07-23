@@ -47,3 +47,63 @@ $$
 （8）每次迭代记录下最优值
 
 （9） 结束
+
+
+
+**概率计算公式**
+
+在蚁群算法中，每只蚂蚁选择下一个城市的概率由信息素浓度和城市间距离决定。具体计算公式如下：
+
+对于每一个未被访问的城市 `i`，其被选择的概率 `select_citys_prob[i]` 计算如下：
+
+$$
+prob[i] = \left( \text{pheromone\_graph}[\text{current\_city}][i] \right)^{\alpha} \times \left( \frac{1.0}{\text{distance\_graph}[\text{current\_city}][i]} \right)^{\beta}
+$$
+
+
+参数说明
+
+- `pheromone_graph[current_city][i]`：从当前城市到城市 `i` 的信息素浓度。
+- `distance_graph[current_city][i]`：从当前城市到城市 `i` 的距离。
+- `\alpha` (ALPHA)：信息素的重要性因子，控制信息素的影响力。
+- `\beta` (BETA)：启发因子，控制距离的影响力。
+
+
+
+### 轮盘赌
+
+假设有三个候选城市A、B、C，其选择概率分别为0.2、0.5和0.3。总概率为1.0。
+
+​	•	生成一个在0.0到1.0之间的随机数，假设随机数为0.6。
+
+​	•	依次减去城市的选择概率：
+
+​	•	从0.6减去A的选择概率0.2，结果为0.4。
+
+​	•	从0.4减去B的选择概率0.5，结果为-0.1。
+
+​	•	当结果小于0时，选择当前城市B。
+
+当随机数小于0时，表明当前城市的累积概率区间包含该随机数，**因此选择当前城市是合理的。**
+
+转这个盘子，看看这个随机数是不是出现在了这个概率区间上。
+
+```python
+# 轮盘选择城市
+# 如果总概率大于0
+if total_prob > 0.0:
+    # 生成一个在0.0到total_prob之间的随机概率
+    temp_prob = random.uniform(0.0, total_prob)
+    # 遍历所有城市
+    for i in range(city_num):
+        # 如果城市i还未被访问
+        if self.open_table_city[i]:
+            # 从临时概率中减去城市i的选择概率
+            temp_prob -= select_citys_prob[i]
+            # 如果临时概率小于0
+            if temp_prob < 0.0:
+                # 选择城市i作为下一个城市
+                next_city = i
+                # 结束循环
+                break
+```
