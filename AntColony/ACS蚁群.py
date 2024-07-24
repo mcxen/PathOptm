@@ -136,6 +136,7 @@ class TSPPLT(object):
         self.iter = 0
         self.__lock = threading.Lock()
         self.__running = False
+        self.fitness_list = []  # 每一代对应的适应度
 
     def search_path(self, evt=None):
         self.__lock.acquire()
@@ -152,9 +153,10 @@ class TSPPLT(object):
                     self.best_ant = copy.deepcopy(ant)
             self.__update_pheromone_graph()
             print(f"迭代次数：{self.iter} 最佳路径总距离：{int(self.best_ant.total_distance)}")
+            self.fitness_list.append(self.best_ant.total_distance)
             # self.plot_path(self.best_ant.path)
             self.iter += 1
-
+        return self.fitness_list
     def __update_pheromone_graph(self):
         temp_pheromone = np.zeros((city_num, city_num))
         for ant in self.ants:
@@ -240,17 +242,31 @@ if __name__ == '__main__':
     """)
 
     # 城市坐标列表
+    # city_pos_list = np.array([
+    #     [67.50, 10.11, 29.33],
+    #     [77.26, 69.57, 74.74],
+    #     [83.38, 22.45, 79.39],
+    #     [76.35, 50.75, 54.87],
+    #     [40.42, 18.64, 73.29],
+    #     [73.76, 26.53, 43.98],
+    #     [4.92, 16.17, 93.49],
+    #     [95.77, 86.62, 14.55],
+    #     [55.32, 11.48, 27.65],
+    #     [89.38, 27.58, 77.86]
+    # ])
     city_pos_list = np.array([
-        [67.50, 10.11, 29.33],
-        [77.26, 69.57, 74.74],
-        [83.38, 22.45, 79.39],
-        [76.35, 50.75, 54.87],
-        [40.42, 18.64, 73.29],
-        [73.76, 26.53, 43.98],
-        [4.92, 16.17, 93.49],
-        [95.77, 86.62, 14.55],
-        [55.32, 11.48, 27.65],
-        [89.38, 27.58, 77.86]
+        [50.5, 109.3], [55.7, 100.7], [68.7, 101.9], [73.8, 100.7], [79.7, 109.8],
+        [93.2, 101.6], [112.2, 103.1], [108.1, 111.7], [40.4, 132], [67.1, 133.2],
+        [67.6, 148.1], [60.3, 160.4], [49.6, 161.6], [42.5, 147.4], [33.3, 147.2],
+        [31.8, 158.5], [78.9, 165], [91.3, 164.8], [99.3, 149.8], [107.6, 163.3],
+        [121.1, 168.1], [131.8, 150.3], [135.5, 169.3], [150.3, 171.5], [162.4, 160.9],
+        [162.9, 152.5], [123.3, 134.6], [94.3, 133.4], [147.1, 136.3], [174, 135.8],
+        [172.8, 110.8], [200.1, 135.8], [198.6, 123.3], [230.9, 133.9], [224.3, 136.6],
+        [222.3, 153.2], [163.9, 170.5], [180.4, 175.1], [190.1, 176.1], [210.2, 178],
+        [220.7, 179.2], [240.8, 181.9], [250.8, 185], [247.4, 155.8], [272.4, 156.8],
+        [270.4, 176.6], [271.6, 183.8], [296.9, 176.6], [301.2, 187.6], [300.7, 156.6],
+        [239.9, 88.4], [218, 84.5], [197.4, 83.8], [174.8, 81.1], [153.5, 79.5],
+        [122.1, 76.6], [225.1, 57.8], [236, 74.6], [121.2, 72.2], [98.1, 75.1]
     ])
 
     # 城市数量
@@ -272,10 +288,23 @@ if __name__ == '__main__':
     RHO = 0.5  # 信息素挥发因子
     Q = 100.0  # 信息素常量
 
-    aco = TSPPLT(n_ants=10, n_iterations=100)
-    aco.search_path()
+    aco = TSPPLT(n_ants=60, n_iterations=100)
+    fitness_list = aco.search_path()
     # aco.plot_path(aco.best_ant.path)
     path_coords = [city_pos_list[city] for city in aco.best_ant.path]
     path_coords.append(path_coords[0])  # 回到起点
     path_coords = np.array(path_coords)
-    plot_3d_path(path_coords)
+    if len(path_coords[0])==3:
+        plot_3d_path(path_coords)
+    else:
+        fig = plt.figure()
+        # print(path_coords)
+        plt.plot(path_coords[:, 0], path_coords[:, 1], 'o-r')
+        plt.title(u"Tsp Path")
+        plt.legend()
+        fig.show()
+    fig = plt.figure()
+    plt.plot(fitness_list)
+    plt.title(u"Fitness Condition")
+    plt.legend()
+    fig.show()

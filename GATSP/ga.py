@@ -49,6 +49,7 @@ class Ga:
         self.individual_list = []  # 每一代的个体列表 个体都具有适应度和基因gene
         self.result_list = []  # 每一代对应的解
         self.fitness_list = []  # 每一代对应的适应度
+        gen_num = len(city_dist_mat[0])
 
     def cross(self):
         new_gen = []

@@ -1,6 +1,8 @@
 # 遗传算法求解TSP问题
 
-交叉算法：
+
+
+### 交叉算法：
 
 ```txt
 # 1  2 3 5  6
@@ -70,3 +72,22 @@ def cross(self):
 ### 三维求解结果示意图
 
 <img src="./assets/README/CleanShot 2024-07-23 at 08.54.15@2x.png" alt="CleanShot 2024-07-23 at 08.54.15@2x" style="zoom:50%;" />
+
+# 使用说明：
+
+需要设置conf里面的维数和种群的基因编码的大小，迭代次数，点数少，迭代次数就可以少一点
+如果是50个焊点，就可以迭代5000次就收敛了。
+
+![CleanShot 2024-07-23 at 16.47.28@2x](./assets/README/CleanShot 2024-07-23 at 16.47.28@2x.png)
+
+
+
+刚开始的时候：
+
+<img src="./assets/README/CleanShot 2024-07-23 at 16.48.29@2x.png" alt="CleanShot 2024-07-23 at 16.48.29@2x" style="zoom:50%;" />
+
+后面就好了
+
+<img src="./assets/README/CleanShot 2024-07-23 at 16.48.49@2x.png" alt="CleanShot 2024-07-23 at 16.48.49@2x" style="zoom:50%;" />
+
+<img src="./assets/README/CleanShot 2024-07-23 at 16.50.09@2x.png" alt="CleanShot 2024-07-23 at 16.50.09@2x" style="zoom:50%;" />

@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e68cc2b1-fc26-45b2-85d3-38f22e19d1a6" name="Changes" comment="封装一个绘图函数">
+    <list default="true" id="e68cc2b1-fc26-45b2-85d3-38f22e19d1a6" name="Changes" comment="精简代码，删除原始canvas无法运行的代码。">
+      <change afterPath="$PROJECT_DIR$/GATSP/assets/README/CleanShot 2024-07-23 at 16.47.28@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GATSP/assets/README/CleanShot 2024-07-23 at 16.48.29@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GATSP/assets/README/CleanShot 2024-07-23 at 16.48.49@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GATSP/assets/README/CleanShot 2024-07-23 at 16.50.09@2x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AntColony/ACS蚁群.py" beforeDir="false" afterPath="$PROJECT_DIR$/AntColony/ACS蚁群.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AntColony/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/AntColony/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GATSP/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/GATSP/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GATSP/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/GATSP/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GATSP/ga.py" beforeDir="false" afterPath="$PROJECT_DIR$/GATSP/ga.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GATSP/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/GATSP/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +44,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.ACS蚁群.executor": "Run",
+    "Python.config.executor": "Run",
     "Python.ga.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -64,7 +74,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1721663643702</updated>
-      <workItem from="1721663645647" duration="20492000" />
+      <workItem from="1721663645647" duration="25480000" />
     </task>
     <task id="LOCAL-00001" summary="Small">
       <option name="closed" value="true" />
@@ -122,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721720789011</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="精简代码，删除原始canvas无法运行的代码。">
+      <option name="closed" value="true" />
+      <created>1721722090002</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1721722090002</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,11 +177,13 @@
     <MESSAGE value="增加2DTSP结果显示新样式，matplotlib显示结果" />
     <MESSAGE value="封装TSPPLT，直接调用Plt的类" />
     <MESSAGE value="封装一个绘图函数" />
-    <option name="LAST_COMMIT_MESSAGE" value="封装一个绘图函数" />
+    <MESSAGE value="精简代码，删除原始canvas无法运行的代码。" />
+    <option name="LAST_COMMIT_MESSAGE" value="精简代码，删除原始canvas无法运行的代码。" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PathOptm$ACS.coverage" NAME="ACS蚁群 Coverage Results" MODIFIED="1721722021439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AntColony" />
-    <SUITE FILE_PATH="coverage/PathOptm$ga.coverage" NAME="ga Coverage Results" MODIFIED="1721696017264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
-    <SUITE FILE_PATH="coverage/PathOptm$main.coverage" NAME="main Coverage Results" MODIFIED="1721720666814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
+    <SUITE FILE_PATH="coverage/PathOptm$ACS.coverage" NAME="ACS蚁群 Coverage Results" MODIFIED="1721737786346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AntColony" />
+    <SUITE FILE_PATH="coverage/PathOptm$config.coverage" NAME="config Coverage Results" MODIFIED="1721724242423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
+    <SUITE FILE_PATH="coverage/PathOptm$ga.coverage" NAME="ga Coverage Results" MODIFIED="1721724181819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
+    <SUITE FILE_PATH="coverage/PathOptm$main.coverage" NAME="main Coverage Results" MODIFIED="1721724582885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GATSP" />
   </component>
 </project>
